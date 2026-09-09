@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+::selection {
+  background-color: #B8863B;
+  color: #F6F3EC;
+}
