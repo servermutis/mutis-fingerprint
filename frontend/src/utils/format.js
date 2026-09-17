@@ -45,16 +45,27 @@ export function formatDate(dateStr) {
   if (!dateStr) return '-';
   const d = new Date(dateStr);
   if (Number.isNaN(d.getTime())) return dateStr;
-  return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+  return d.toLocaleDateString('id-ID', {
+    timeZone: 'Asia/Jakarta',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
+/** Selalu tampil WIB, format 24 jam HH:mm:ss - jangan andalkan default browser. */
 export function formatTime(dateTimeStr) {
   if (!dateTimeStr) return '-';
   const d = new Date(dateTimeStr);
   if (Number.isNaN(d.getTime())) return '-';
-  return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleTimeString('id-ID', {
+    timeZone: 'Asia/Jakarta',
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
 }
-
 export function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }

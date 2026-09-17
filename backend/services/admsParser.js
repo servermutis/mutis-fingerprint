@@ -24,6 +24,10 @@ const VERIFY_MAP = {
   15: 'face',
 };
 
+// Zona waktu tempat mesin fingerprint X105 berada. Default WIB (UTC+7).
+// Override lewat .env: DEVICE_TZ_OFFSET=+08:00 (WITA) atau +09:00 (WIT).
+const DEVICE_TZ_OFFSET = process.env.DEVICE_TZ_OFFSET || '+07:00';
+
 /**
  * Parse body dari POST /iclock/cdata?table=ATTLOG
  * Format tiap baris (dipisah \t):
@@ -37,7 +41,10 @@ function parseAttlog(rawBody) {
     const [pin, time, status, verify] = cols;
     return {
       device_user_pin: pin,
-      scan_time: time, // format 'YYYY-MM-DD HH:mm:ss', aman langsung ke Postgres timestamptz
+      scan_time: `${time}${DEVICE_TZ_OFFSET}`, // mesin kirim jam lokal tanpa info zona,
+      // jadi kita tandai eksplisit sebagai WIB (UTC+7) supaya Postgres tidak
+      // keliru menganggapnya UTC. Ganti DEVICE_TZ_OFFSET di .env kalau mesin
+      // ada di zona WITA (+08:00) atau WIT (+09:00).
       status: STATUS_MAP[Number(status)] || 'unknown',
       verify_mode: VERIFY_MAP[Number(verify)] || 'unknown',
       raw_payload: line,

@@ -12,6 +12,7 @@ import PengajuanIzin from './pages/guru/PengajuanIzin';
 
 import DashboardAdmin from './pages/admin/DashboardAdmin';
 import Rekap from './pages/admin/Rekap';
+import Laporan from './pages/admin/Laporan';
 import ApproveIzin from './pages/admin/ApproveIzin';
 import KoreksiAbsensi from './pages/admin/KoreksiAbsensi';
 import MasterData from './pages/admin/MasterData';
@@ -92,6 +93,16 @@ export default function App() {
         }
       />
       <Route
+        path="/admin/laporan"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <Layout>
+              <Laporan />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/admin/izin"
         element={
           <ProtectedRoute allowedRoles={['admin']}>
@@ -129,6 +140,16 @@ export default function App() {
           <ProtectedRoute allowedRoles={['pimpinan']}>
             <Layout>
               <DashboardPimpinan />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pimpinan/laporan"
+        element={
+          <ProtectedRoute allowedRoles={['pimpinan']}>
+            <Layout>
+              <Laporan />
             </Layout>
           </ProtectedRoute>
         }

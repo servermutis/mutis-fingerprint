@@ -6,11 +6,15 @@ const NAV_BY_ROLE = {
   admin: [
     { to: '/admin', label: 'Ringkasan', end: true },
     { to: '/admin/rekap', label: 'Rekap & Ekspor' },
+    { to: '/admin/laporan', label: 'Laporan' },
     { to: '/admin/izin', label: 'Persetujuan Izin' },
     { to: '/admin/koreksi', label: 'Koreksi Absensi' },
     { to: '/admin/master', label: 'Data Induk' },
   ],
-  pimpinan: [{ to: '/pimpinan', label: 'Ringkasan', end: true }],
+  pimpinan: [
+    { to: '/pimpinan', label: 'Ringkasan', end: true },
+    { to: '/pimpinan/laporan', label: 'Laporan' },
+  ],
   guru: [
     { to: '/guru', label: 'Riwayat Saya', end: true },
     { to: '/guru/izin', label: 'Izin / Sakit / Cuti' },
@@ -33,7 +37,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="flex min-h-screen bg-paper text-ink">
-      <aside className="flex w-64 shrink-0 flex-col justify-between bg-ink text-paper">
+      <aside className="flex w-64 shrink-0 flex-col justify-between bg-ink text-paper print:hidden">
         <div>
           <div className="border-b border-ink-soft/40 px-6 py-6">
             <p className="font-serif text-xl tracking-tight">MUTIS</p>
@@ -71,8 +75,8 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
-      <main className="flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-6xl px-8 py-8">{children}</div>
+      <main className="flex-1 overflow-y-auto print:overflow-visible">
+        <div className="mx-auto max-w-6xl px-8 py-8 print:max-w-none print:px-0 print:py-0">{children}</div>
       </main>
     </div>
   );

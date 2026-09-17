@@ -1,3 +1,8 @@
+// WAJIB paling atas: kunci timezone seluruh proses Node ke WIB (Asia/Jakarta)
+// supaya semua Date(), toLocaleString(), dan cron job konsisten - terlepas
+// dari timezone default OS/hosting mini-PC ini.
+process.env.TZ = 'Asia/Jakarta';
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -26,10 +31,20 @@ app.use('/api/leave', leaveRoutes);
 app.use('/api/corrections', correctionRoutes);
 app.use('/api/reports', reportRoutes);
 
-app.get('/health', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
+app.get('/health', (req, res) =>
+  res.json({
+    status: 'ok',
+    time: new Date().toLocaleString('id-ID', {
+      timeZone: 'Asia/Jakarta',
+      hour12: false,
+      dateStyle: 'full',
+      timeStyle: 'medium',
+    }),
+  })
+);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`Server absensi jalan di port ${PORT}`);
+  console.log(`Server absensi jalan di port ${PORT} (timezone proses: ${process.env.TZ})`);
   console.log(`Arahkan X105 ke: http://<IP-server-ini>:${PORT}/iclock/cdata`);
 });

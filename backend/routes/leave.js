@@ -37,7 +37,7 @@ router.get('/mine', requireAuth, async (req, res) => {
 router.get('/pending', requireAuth, requireRole('admin'), async (req, res) => {
   const { data, error } = await supabase
     .from('leave_requests')
-    .select('*, profiles(full_name, unit_id)')
+    .select('*, profiles!leave_requests_user_id_fkey(full_name, unit_id)')
     .eq('status', 'pending')
     .order('created_at', { ascending: true });
   if (error) return res.status(400).json({ error: error.message });

@@ -94,8 +94,8 @@ function ManualCorrectionForm() {
         method: 'PATCH',
         body: {
           ...body,
-          jam_masuk_aktual: body.jam_masuk_aktual ? `${tanggal}T${body.jam_masuk_aktual}:00` : null,
-          jam_pulang_aktual: body.jam_pulang_aktual ? `${tanggal}T${body.jam_pulang_aktual}:00` : null,
+          jam_masuk_aktual: body.jam_masuk_aktual ? `${tanggal}T${body.jam_masuk_aktual}:00+07:00` : null,
+          jam_pulang_aktual: body.jam_pulang_aktual ? `${tanggal}T${body.jam_pulang_aktual}:00+07:00` : null,
         },
       });
       setSuccess(true);
